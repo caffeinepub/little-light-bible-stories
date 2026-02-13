@@ -1,0 +1,23 @@
+{
+  "backend/main.mo": "Motoko canister storing up to 20 stories with add, get, and sorted list retrieval.",
+  "feature_evidence.json": "Structured feature evidence listing features, related files, components, and test IDs.",
+  "frontend-file-summaries.txt": "Prewritten summaries of multiple frontend files for quick reference.",
+  "frontend/index.css": "Global Tailwind CSS theme defining warm color variables and dark-mode overrides.",
+  "frontend/index.html": "Base HTML file mounting the React app and loading main.tsx.",
+  "frontend/src/App.tsx": "Sets up React Query and TanStack Router for TOC and story pages.",
+  "frontend/src/components/AppLayout.tsx": "Shared layout with header, footer, and PDF download button wrapping routed pages.",
+  "frontend/src/components/AudioNarrationControls.tsx": "UI controls for speech narration with play, pause, restart, and progress bar.",
+  "frontend/src/components/DownloadPdfButton.tsx": "Triggers PDF generation of all stories with loading, error handling, and retry.",
+  "frontend/src/content/storyAssets.ts": "Maps story numbers to illustration and coloring asset paths plus cover asset getter.",
+  "frontend/src/features/pdf/exportEbookPdf.ts": "Builds a print-ready HTML document with cover, story pages, and images for PDF export.",
+  "frontend/src/hooks/useActor.ts": "Creates and caches a backend actor based on Internet Identity, invalidating dependent queries when the identity changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Provides context and hooks for managing Internet Identity authentication, login flow, and stored identities.",
+  "frontend/src/hooks/useQueries.ts": "Exposes React Query hooks that fetch stories or a single story using the authenticated actor.",
+  "frontend/src/hooks/useSpeechNarration.ts": "Implements speech synthesis playback with play, pause, restart, and progress tracking.",
+  "frontend/src/index.css": "Defines Tailwind layers and theme variables for light and dark mode along with global font and base styling.",
+  "frontend/src/main.tsx": "Bootstraps the app by rendering React with QueryClient and InternetIdentity providers.",
+  "frontend/src/pages/StoryReaderPage.tsx": "Displays a story with navigation, loading states, audio narration controls, and error handling.",
+  "frontend/src/pages/TableOfContentsPage.tsx": "Shows a list of story entries with loading and error states, allowing navigation to individual stories.",
+  "frontend/tailwind.config.js": "Configures Tailwind theme extensions, colors, animations, plugins, and enables class-based dark mode.",
+  "project_state.json": "Project metadata for a children’s Bible stories ebook app and a list of required illustrations and coloring pages for 20 stories."
+}

@@ -1,0 +1,15 @@
+{
+  "frontend/src/App.tsx": "Main application component that sets up TanStack Router with routes for the table of contents and story reader pages, wrapped in QueryClientProvider.",
+  "frontend/src/components/AppLayout.tsx": "Shared layout component with header (logo, title, PDF download button), main content area with Outlet for child routes, and footer with attribution.",
+  "frontend/src/pages/TableOfContentsPage.tsx": "Displays a grid of all 20 Bible stories with numbered badges, fetched from the backend, with navigation to individual story pages.",
+  "frontend/src/pages/StoryReaderPage.tsx": "Story reader page that displays a single story with illustration, text content, audio narration controls, coloring page, and previous/next navigation.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for fetching all stories and individual stories from the backend canister.",
+  "frontend/src/content/storyAssets.ts": "Helper functions that map story numbers to their corresponding illustration and coloring page asset paths.",
+  "frontend/src/components/AudioNarrationControls.tsx": "Audio narration UI component with play/pause/restart controls, progress bar, and fallback message for unsupported browsers.",
+  "frontend/src/hooks/useSpeechNarration.ts": "Custom hook that uses the Web Speech API to provide text-to-speech narration with playback controls and progress tracking.",
+  "frontend/src/components/DownloadPdfButton.tsx": "Button component that triggers PDF generation via browser print dialog with loading states, error handling, and retry functionality.",
+  "frontend/src/features/pdf/exportEbookPdf.ts": "PDF generation using browser's native print-to-PDF functionality by creating a formatted HTML document with all stories, illustrations, and coloring pages that opens in a print dialog.",
+  "frontend/src/index.css": "Global styles with warm, kid-friendly OKLCH color palette (yellows, oranges) for light and dark modes, using Comic Sans-style fonts.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with kid-friendly font family (Comic Sans MS) and custom color tokens matching the warm theme.",
+  "frontend/package.json": "Package configuration with jsPDF dependency added for client-side PDF generation."
+}

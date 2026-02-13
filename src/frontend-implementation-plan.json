@@ -1,0 +1,359 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Little Light Bible Stories (Frontend): Reader, Audio, Illustrations, Coloring Pages, and PDF Export",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Implement in-app ebook reading experience with a Table of Contents and story reader view for 20 stories, including next/previous navigation.",
+      "acceptanceCriteria": [
+        "The app displays a Table of Contents listing 20 stories in order, starting from Creation.",
+        "A user can open a story to read it inside the app.",
+        "Each story includes at minimum: title, story text, and a clear story order/index.",
+        "Story navigation supports moving to next/previous story."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the app shell and route wiring for the required reading flow (Table of Contents and Story view). Use shadcn-ui components (e.g., Button/Card) for consistent UI building blocks; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/TableOfContentsPage.tsx",
+          "operation": "create",
+          "description": "Create the Table of Contents page that loads the story list from the canister using the generated actor (via the existing useActor hook) and renders exactly 20 stories in order. Use shadcn-ui list/typography-friendly components for layout; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/StoryReaderPage.tsx",
+          "operation": "create",
+          "description": "Create the story reader page that loads an individual story from the canister (getStory) and renders title + story text + story index, with next/previous navigation actions. Use shadcn-ui Button/Separator components for navigation controls; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useStories.ts",
+          "operation": "create",
+          "description": "Add React Query-based hooks that call the canister via the actor to fetch the full story list and a story by id, providing loading and error states to the pages."
+        },
+        {
+          "path": "frontend/src/components/AppLayout.tsx",
+          "operation": "create",
+          "description": "Add a shared layout component (header + content container) used by both the Table of Contents and Story pages, including a prominent title and a safe place for the Download PDF action (wired in REQ-2). Use shadcn-ui components for the header/actions styling; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Add client-side generation and download of one combined PDF containing a cover and all 20 stories with illustration + coloring page sections, with readable error handling and retry.",
+      "acceptanceCriteria": [
+        "A user can click a “Download PDF” action to generate and download a single PDF file containing all 20 stories.",
+        "The PDF includes a cover page and then each story with its illustration and a separate coloring page (or clearly separated section) for that story.",
+        "PDF generation occurs in the client (no external services required).",
+        "If PDF generation fails, the UI shows a readable error message in English and allows retry."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/package.json",
+          "operation": "modify",
+          "description": "Add/confirm a client-side PDF generation dependency (e.g., jsPDF or pdf-lib) and any small helper dependency needed for images-to-PDF conversion, ensuring the solution runs fully in-browser without external services."
+        },
+        {
+          "path": "frontend/src/features/pdf/exportEbookPdf.ts",
+          "operation": "create",
+          "description": "Implement client-side PDF creation for the full ebook: cover page (using the generated cover asset) then 20 story sections, each including the story title/text plus the story illustration and a clearly separated coloring page section."
+        },
+        {
+          "path": "frontend/src/components/DownloadPdfButton.tsx",
+          "operation": "create",
+          "description": "Create a Download PDF UI control that triggers PDF generation, shows progress/busy state, and displays an English error message with a retry action on failure. Use shadcn-ui Button and Alert-like components where available; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Wire the Download PDF control into the header so it is reachable from the reading experience. Use shadcn-ui layout components as appropriate; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add automatic in-app audio narration per story with play/pause, restart, and progress display, without requiring uploaded audio files; include a clear fallback if unsupported.",
+      "acceptanceCriteria": [
+        "Each story view includes audio narration playback controls.",
+        "Audio playback works for all 20 stories without requiring the user to upload audio files.",
+        "If audio is not supported by the browser/device, the UI shows a clear English fallback message."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useSpeechNarration.ts",
+          "operation": "create",
+          "description": "Implement automatic narration using the browser's built-in Web Speech API (speechSynthesis) to read the story text aloud with play/pause, restart, and progress tracking suitable for a basic progress display; include detection for unsupported browsers."
+        },
+        {
+          "path": "frontend/src/components/AudioNarrationControls.tsx",
+          "operation": "create",
+          "description": "Create audio controls UI (play/pause, restart, progress display) and an English fallback message when unsupported. Use shadcn-ui Button and Progress components where available; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/StoryReaderPage.tsx",
+          "operation": "modify",
+          "description": "Embed the AudioNarrationControls in the story reader page, feeding it the current story text and ensuring it resets correctly when navigating between stories."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Ship and display automatically generated illustration and coloring-page images for each story as static frontend assets.",
+      "acceptanceCriteria": [
+        "Each story view displays one illustration image and one coloring page image.",
+        "All required images are shipped as static assets under frontend/public/assets/generated (not served from the backend).",
+        "Coloring pages are black-and-white, high-contrast line art suitable for printing."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/content/storyAssets.ts",
+          "operation": "create",
+          "description": "Create a single source-of-truth mapping from story order/index (1..20) to static asset paths for the illustration and coloring page images (and the cover), used by both the reader UI and PDF export."
+        },
+        {
+          "path": "frontend/src/pages/StoryReaderPage.tsx",
+          "operation": "modify",
+          "description": "Render the story illustration and the coloring-page line art for the active story using the static asset mapping, with accessible alt text and print-friendly sizing. Use shadcn-ui Card/Separator for presentation if helpful; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/pdf/exportEbookPdf.ts",
+          "operation": "modify",
+          "description": "Embed the correct generated illustration and coloring page images (static assets) into the combined PDF export for each story, plus the cover image on the cover page."
+        },
+        {
+          "path": "frontend/public/assets/generated/little-light-cover.dim_1600x2400.png",
+          "operation": "create",
+          "description": "Add the generated ebook cover illustration asset at this exact path so it can be used in-app and in PDF export."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-01-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Creation)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-01-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Creation, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-02-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (The Fall)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-02-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (The Fall, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-03-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Noah’s Ark)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-03-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Noah’s Ark, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-04-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Tower of Babel)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-04-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Tower of Babel, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-05-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (God’s Promise to Abraham)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-05-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (God’s Promise to Abraham, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-06-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Isaac Is Born)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-06-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Isaac Is Born, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-07-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Jacob’s Dream)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-07-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Jacob’s Dream, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-08-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Joseph’s Coat of Many Colors)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-08-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Joseph’s Coat of Many Colors, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-09-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Moses and the Burning Bush)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-09-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Moses and the Burning Bush, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-10-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (The Ten Plagues)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-10-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (The Ten Plagues, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-11-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (The Red Sea)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-11-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (The Red Sea, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-12-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Ten Commandments)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-12-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Ten Commandments, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-13-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Joshua and Jericho)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-13-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Joshua and Jericho, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-14-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (David and Goliath)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-14-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (David and Goliath, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-15-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Jonah and the Big Fish)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-15-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Jonah and the Big Fish, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-16-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Daniel in the Lions’ Den)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-16-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Daniel in the Lions’ Den, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-17-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Birth of Jesus)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-17-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Birth of Jesus, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-18-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (Miracles of Jesus)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-18-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (Miracles of Jesus, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-19-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (The Cross and Resurrection)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-19-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (The Cross and Resurrection, line art suitable for printing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-20-illustration.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated story illustration asset at this exact path (The Great Commission)."
+        },
+        {
+          "path": "frontend/public/assets/generated/story-20-coloring.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated coloring page asset at this exact path (The Great Commission, line art suitable for printing)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Apply a cohesive kid-friendly theme (warm palette, readable typography, consistent spacing) across the app, avoiding blue/purple as primary colors.",
+      "acceptanceCriteria": [
+        "The UI uses a consistent design system (colors, type scale, and component styles) across pages.",
+        "The theme feels playful and readable for kids/parents (high contrast, large comfortable text sizes).",
+        "Primary palette is not blue/purple-dominant."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styling entry point using Tailwind plus theme CSS variables for a warm, kid-friendly look (e.g., sunny yellows, soft oranges, gentle greens), with high-contrast foreground and comfortable base font sizing."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme tokens only as needed to support the kid-friendly theme (spacing/typography defaults) while keeping the palette warm and not blue/purple-dominant."
+        },
+        {
+          "path": "frontend/src/components/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Ensure consistent layout spacing, readable typography, and cohesive component styling across pages using shadcn-ui components; verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}

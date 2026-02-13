@@ -1,0 +1,106 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-little-light-bible-stories-ebook-experience-containing-exactly-20-stories-starting-from-creation-with-an-in-app-reading-experience-table-of-contents-story-view-that-works-without-requiring-users-to-download-the-pdf",
+      "featureTitle": "Create a “Little Light Bible Stories” ebook experience containing exactly 20 stories starting from Creation, with an in-app reading experience (table of contents + story view) that works without requiring users to download the PDF.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AppLayout.tsx",
+        "frontend/src/pages/StoryReaderPage.tsx",
+        "frontend/src/pages/TableOfContentsPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-provide-an-ebook-export-feature-that-generates-one-combined-downloadable-pdf-containing-all-20-stories-in-order-including-each-story-s-illustration-and-a-kid-friendly-coloring-page",
+      "featureTitle": "Provide an ebook export feature that generates one combined, downloadable PDF containing all 20 stories in order, including each story’s illustration and a kid-friendly coloring page.",
+      "files": [
+        "frontend/src/components/AppLayout.tsx",
+        "frontend/src/components/DownloadPdfButton.tsx",
+        "frontend/src/features/pdf/exportEbookPdf.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-automatic-audio-narration-for-each-story-playable-inside-the-app-with-basic-playback-controls-play-pause-restart-and-progress-display",
+      "featureTitle": "Add automatic audio narration for each story, playable inside the app, with basic playback controls (play/pause, restart, and progress display).",
+      "files": [
+        "frontend/src/components/AudioNarrationControls.tsx",
+        "frontend/src/hooks/useSpeechNarration.ts",
+        "frontend/src/pages/StoryReaderPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-include-automatically-generated-illustrated-images-for-each-story-and-kid-friendly-coloring-pages-coloring-book-style-line-art-throughout-the-ebook-app-and-store-them-as-static-frontend-assets",
+      "featureTitle": "Include automatically generated illustrated images for each story and kid-friendly coloring pages (coloring-book style line art) throughout the ebook/app, and store them as static frontend assets.",
+      "files": [
+        "frontend/src/content/storyAssets.ts",
+        "frontend/src/features/pdf/exportEbookPdf.ts",
+        "frontend/src/pages/StoryReaderPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-cohesive-kid-friendly-visual-theme-for-little-light-bible-stories-across-the-app-colors-typography-spacing-and-component-styling-avoiding-blue-purple-as-primary-colors-unless-required-by-content",
+      "featureTitle": "Apply a cohesive, kid-friendly visual theme for “Little Light Bible Stories” across the app (colors, typography, spacing, and component styling), avoiding blue/purple as primary colors unless required by content.",
+      "files": [
+        "frontend/src/components/AppLayout.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

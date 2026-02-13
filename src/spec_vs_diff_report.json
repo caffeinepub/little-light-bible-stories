@@ -1,0 +1,85 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-13T13:32:10.609Z",
+  "summary": "Diff adds a new Motoko backend actor with story CRUD-like queries, a React frontend with TOC + story reader routes, speech-synthesis narration controls, and a client-side “PDF” export via building printable HTML. Several key requirements are not demonstrably met from the diff summary (notably: ensuring exactly 20 stories starting from Creation, and shipping the required static generated images). The diff also introduces authentication-related wiring and external attribution that were not requested and appears to touch files listed as immutable in the BuildRequest constraints.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Exactly 20 stories starting from Creation must exist and be shown in an in-app Table of Contents in order.",
+      "reason": "Backend only defines an empty Map and an `addStory` method, but no seeded/stored initial set of 20 stories (including Creation) is shown. Frontend TOC renders whatever `getAllStories()` returns, which could be empty and is not guaranteed to be exactly 20 or to start with Creation.",
+      "evidence": [
+        "backend/main.mo (stories initialized empty; only addStory enforces max 20)",
+        "frontend/src/pages/TableOfContentsPage.tsx (renders stories from useGetAllStories())"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Generate one combined, downloadable PDF containing all 20 stories (cover + each story illustration + separate coloring page section).",
+      "reason": "PDF export implementation is truncated and its described behavior indicates opening the browser print dialog rather than generating a directly downloadable PDF file. Additionally, the truncated `exportEbookPdf.ts` does not clearly show inclusion of the coloring page for each story or that it always includes all 20 stories in order.",
+      "evidence": [
+        "frontend/src/components/DownloadPdfButton.tsx (comment: 'the print dialog will open', title: 'Opens print dialog to save as PDF')",
+        "frontend/src/features/pdf/exportEbookPdf.ts (truncated; only cover + story page start shown)"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Ship all required generated illustration + coloring page images as static assets under frontend/public/assets/generated.",
+      "reason": "Code references the expected asset paths, but the diff summary does not include any added image assets under `frontend/public/assets/generated` (an omitted file is mentioned but not evidenced as the full required asset set). Therefore, it is not verifiable that the required images are actually included.",
+      "evidence": [
+        "frontend/src/content/storyAssets.ts (references /assets/generated/story-XX-illustration..., /assets/generated/story-XX-coloring...)",
+        "frontend/src/content/storyAssets.ts (cover path /assets/generated/little-light-cover...)",
+        "File diff summary (no listed additions under frontend/public/assets/generated; omitted files due to limits: added=1)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Internet Identity authentication provider wiring (InternetIdentityProvider/useInternetIdentity/useActor identity-based actor recreation), despite auth not being required for this build.",
+      "reason": "BuildRequest explicitly states authentication is not required; diff adds and uses Internet Identity provider and identity-aware actor logic.",
+      "evidence": [
+        "frontend/src/main.tsx (wraps app with InternetIdentityProvider)",
+        "frontend/src/hooks/useActor.ts (uses useInternetIdentity identity logic to create actor)",
+        "frontend/src/hooks/useInternetIdentity.ts (Internet Identity auth client implementation)"
+      ]
+    },
+    {
+      "description": "Footer attribution link to caffeine.ai with referral parameters.",
+      "reason": "Not requested by the BuildRequest requirements or acceptance criteria.",
+      "evidence": [
+        "frontend/src/components/AppLayout.tsx (footer includes caffeine.ai link with UTM params)"
+      ]
+    },
+    {
+      "description": "Backend mutation method `addStory` with caller parameter (shared) even though only query methods for reading were required.",
+      "reason": "REQ-5 requires query methods to fetch story list/by id; adding write APIs was not requested.",
+      "evidence": [
+        "backend/main.mo (public shared func addStory...)"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AppLayout.tsx",
+    "frontend/src/components/AudioNarrationControls.tsx",
+    "frontend/src/components/DownloadPdfButton.tsx",
+    "frontend/src/content/storyAssets.ts",
+    "frontend/src/features/pdf/exportEbookPdf.ts",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useSpeechNarration.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/StoryReaderPage.tsx",
+    "frontend/src/pages/TableOfContentsPage.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

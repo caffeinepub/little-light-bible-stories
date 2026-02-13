@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build the “Little Light Bible Stories” ebook app: 20 stories starting from Creation, in-app reading plus a single combined PDF download, with automatically generated illustrations, audio, and kid-friendly color pages.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Ebook cover illustration, warm kid-friendly style (little-light-cover.dim_1600x2400.png)\n- Bible story illustration: Creation (story-01-illustration.dim_1024x1024.png)\n- Coloring page line art: Creation (story-01-coloring.dim_1024x1024.png)\n- Bible story illustration: The Fall (story-02-illustration.dim_1024x1024.png)\n- Coloring page line art: The Fall (story-02-coloring.dim_1024x1024.png)\n- Bible story illustration: Noah’s Ark (story-03-illustration.dim_1024x1024.png)\n- Coloring page line art: Noah’s Ark (story-03-coloring.dim_1024x1024.png)\n- Bible story illustration: Tower of Babel (story-04-illustration.dim_1024x1024.png)\n- Coloring page line art: Tower of Babel (story-04-coloring.dim_1024x1024.png)\n- Bible story illustration: God’s Promise to Abraham (story-05-illustration.dim_1024x1024.png)\n- Coloring page line art: God’s Promise to Abraham (story-05-coloring.dim_1024x1024.png)\n- Bible story illustration: Isaac Is Born (story-06-illustration.dim_1024x1024.png)\n- Coloring page line art: Isaac Is Born (story-06-coloring.dim_1024x1024.png)\n- Bible story illustration: Jacob’s Dream (story-07-illustration.dim_1024x1024.png)\n- Coloring page line art: Jacob’s Dream (story-07-coloring.dim_1024x1024.png)\n- Bible story illustration: Joseph’s Coat of Many Colors (story-08-illustration.dim_1024x1024.png)\n- Coloring page line art: Joseph’s Coat of Many Colors (story-08-coloring.dim_1024x1024.png)\n- Bible story illustration: Moses and the Burning Bush (story-09-illustration.dim_1024x1024.png)\n- Coloring page line art: Moses and the Burning Bush (story-09-coloring.dim_1024x1024.png)\n- Bible story illustration: The Ten Plagues (story-10-illustration.dim_1024x1024.png)\n- Coloring page line art: The Ten Plagues (story-10-coloring.dim_1024x1024.png)\n- Bible story illustration: The Red Sea (story-11-illustration.dim_1024x1024.png)\n- Coloring page line art: The Red Sea (story-11-coloring.dim_1024x1024.png)\n- Bible story illustration: Ten Commandments (story-12-illustration.dim_1024x1024.png)\n- Coloring page line art: Ten Commandments (story-12-coloring.dim_1024x1024.png)\n- Bible story illustration: Joshua and Jericho (story-13-illustration.dim_1024x1024.png)\n- Coloring page line art: Joshua and Jericho (story-13-coloring.dim_1024x1024.png)\n- Bible story illustration: David and Goliath (story-14-illustration.dim_1024x1024.png)\n- Coloring page line art: David and Goliath (story-14-coloring.dim_1024x1024.png)\n- Bible story illustration: Jonah and the Big Fish (story-15-illustration.dim_1024x1024.png)\n- Coloring page line art: Jonah and the Big Fish (story-15-coloring.dim_1024x1024.png)\n- Bible story illustration: Daniel in the Lions’ Den (story-16-illustration.dim_1024x1024.png)\n- Coloring page line art: Daniel in the Lions’ Den (story-16-coloring.dim_1024x1024.png)\n- Bible story illustration: Birth of Jesus (story-17-illustration.dim_1024x1024.png)\n- Coloring page line art: Birth of Jesus (story-17-coloring.dim_1024x1024.png)\n- Bible story illustration: Miracles of Jesus (story-18-illustration.dim_1024x1024.png)\n- Coloring page line art: Miracles of Jesus (story-18-coloring.dim_1024x1024.png)\n- Bible story illustration: The Cross and Resurrection (story-19-illustration.dim_1024x1024.png)\n- Coloring page line art: The Cross and Resurrection (story-19-coloring.dim_1024x1024.png)\n- Bible story illustration: The Great Commission (story-20-illustration.dim_1024x1024.png)\n- Coloring page line art: The Great Commission (story-20-coloring.dim_1024x1024.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-little-light-bible-stories-ebook-experience-containing-exactly-20-stories-starting-from-creation-with-an-in-app-reading-experience-table-of-contents-story-view-that-works-without-requiring-users-to-download-the-pdf",
+      "title": "Create a “Little Light Bible Stories” ebook experience containing exactly 20 stories starting from Creation, with an in-app reading experience (table of contents + story view) that works without requiring users to download the PDF.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-an-ebook-export-feature-that-generates-one-combined-downloadable-pdf-containing-all-20-stories-in-order-including-each-story-s-illustration-and-a-kid-friendly-coloring-page",
+      "title": "Provide an ebook export feature that generates one combined, downloadable PDF containing all 20 stories in order, including each story’s illustration and a kid-friendly coloring page.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-automatic-audio-narration-for-each-story-playable-inside-the-app-with-basic-playback-controls-play-pause-restart-and-progress-display",
+      "title": "Add automatic audio narration for each story, playable inside the app, with basic playback controls (play/pause, restart, and progress display).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-include-automatically-generated-illustrated-images-for-each-story-and-kid-friendly-coloring-pages-coloring-book-style-line-art-throughout-the-ebook-app-and-store-them-as-static-frontend-assets",
+      "title": "Include automatically generated illustrated images for each story and kid-friendly coloring pages (coloring-book style line art) throughout the ebook/app, and store them as static frontend assets.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-cohesive-kid-friendly-visual-theme-for-little-light-bible-stories-across-the-app-colors-typography-spacing-and-component-styling-avoiding-blue-purple-as-primary-colors-unless-required-by-content",
+      "title": "Apply a cohesive, kid-friendly visual theme for “Little Light Bible Stories” across the app (colors, typography, spacing, and component styling), avoiding blue/purple as primary colors unless required by content.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create “Little Light Bible Stories” ebook with 20 stories starting from Creation",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "In-app reader for the Bible stories",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Generate one combined PDF ebook download containing all 20 stories",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Automatically generate illustrations for stories",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Automatically generate audio narration for stories",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Include kid-friendly color pages throughout the ebook for coloring",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Persist the ebook’s story metadata/content in the Motoko backend so the frontend loads the list of stories and their data from the canister (not hardcoded only in the UI).",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Little Light Bible Stories",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
